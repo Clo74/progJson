@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+var jsonTags;
 
 function caricaTag() {
     fetch('http://localhost:8080/nostalciac/resources/tags')
@@ -11,9 +12,51 @@ function caricaTag() {
                 console.log("response...", response);
                 return response.json()
             })
-            .then(json => creaTabellaDaJson(json, "id,tag,tipo", "tab1", "tabella", "#contenitore"))
-            .catch (x => {alert("err" +x); console.log("err", x)}) 
+            .then(json => {
+                creaTabellaDaJson(json, "id,tag,tipo", "tab1", "tabella", "#contenitore");
+                jsonTags = json;
+            })
+            .then(e => caricaSelect())
+            .catch(x => {
+                alert("err" + x);
+                console.log("err", x)
+            })
 
 }
 
 caricaTag();
+
+function caricaSelect() {
+    jsonTags.forEach((tag, j) => {
+        let opt = document.createElement("option");
+        opt.innerHTML = tag.id + " --> " + tag.tag + " - " + tag.tipo;
+        opt.value = j;
+        opt.setAttribute("tag", tag.tag);
+        opt.setAttribute("tipo", tag.tipo);
+        opt.setAttribute("idTag", tag.id); //meglio che id
+        document.querySelector("#sel_tags").append(opt);
+
+    })
+
+
+}
+
+
+
+//window.onload = function () {
+
+
+    document.querySelector("#sel_tags").onchange = function (e) {
+        
+        let indiceOpzione =  document.querySelector("#sel_tags").selectedIndex
+        let opzioneSelezionata = document.querySelector("#sel_tags").options[indiceOpzione]
+        
+        let idTag = opzioneSelezionata.getAttribute("idTag")
+        let tipo = opzioneSelezionata.getAttribute("tipo")
+        let tag = opzioneSelezionata.getAttribute("tag")
+        document.querySelector("#tag").value = tag
+        document.querySelector("#tipo").value = tipo
+        console.log(idTag, tipo, tag)
+    }
+
+//}

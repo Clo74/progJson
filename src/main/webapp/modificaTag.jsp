@@ -16,6 +16,21 @@
     <body>
         <h1>Modifica TAGS</h1>
         <div id="contenitore"></div>
+        <form>
+
+            <select id="sel_tags">
+                <option value="-1">Scegli il Tag</option>
+            </select>
+
+            <label for="tipo">Tipo: </label>
+            <input type="text" id="tipo">
+            <label for="tag">Tag: </label>
+            <input type="text" id="tag">
+            <input type="submit" id="b_modTag" value="Conferma modifica">
+
+            <br>
+
+        </form>
         <script src="modificaTag.js" type="text/javascript"></script>
-</body>
+    </body>
 </html>
